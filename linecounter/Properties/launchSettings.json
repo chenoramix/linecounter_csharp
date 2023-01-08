@@ -2,7 +2,7 @@
   "profiles": {
     "linecounter": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\mkrzy\\Documents\\Projekty\\linecounter_csharp *.cs"
+      "commandLineArgs": "C:\\Users\\mkrzy\\Documents\\Projekty *.cs"
     }
   }
 }
