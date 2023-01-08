@@ -5,28 +5,31 @@ namespace linecounter
 {
     internal class Program
     {
-        /*
-        static void processDirectories(string sDir, List<string> paths, string pattern)
+        static void processDirs(string cDir, List<string> paths, string pattern)
         {
             try
             {
-                foreach(string dir in Directory.GetDirectories(sDir))
+                var result = Directory.EnumerateFiles(cDir);
+                foreach(var item in result)
                 {
-                    foreach(string file in Directory.GetFiles(dir))
+                    if(FileSystemName.MatchesSimpleExpression(pattern, item))
                     {
-                        bool isMatch = FileSystemName.MatchesSimpleExpression(pattern, file);
-                        if(isMatch)
-                        {
-                            paths.Add(file);
-                        }
+                        paths.Add(item);
                     }
-                    processDirectories(dir, paths, pattern);
+                    //Console.WriteLine(item);
                 }
+
+                result = Directory.EnumerateDirectories(cDir);
+                foreach(var item in result)
+                {
+                    processDirs(item, paths, pattern);
+                }
+
             } catch(Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-        }*/
+        }
         static void Main(string[] args)
         {
             if(args.Length != 2)
@@ -42,7 +45,10 @@ namespace linecounter
                 return;
             }
 
-            string[] files = Array.Empty<string>();
+            List<string> paths = new List<string>();
+            processDirs(args[0], paths, args[1]);
+
+            /*string[] files = Array.Empty<string>();
             try
             {
                 files = Directory.GetFiles(args[0], args[1], SearchOption.AllDirectories);
@@ -71,7 +77,8 @@ namespace linecounter
             }
 
             Console.WriteLine($"Counted lines: {lineCounter}");
-            Console.WriteLine($"In {files.Length} files");
+            Console.WriteLine($"In {files.Length} files");*/
+
         }
     }
 }
