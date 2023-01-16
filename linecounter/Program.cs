@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.IO.Enumeration;
+﻿using System.IO.Enumeration;
 
 namespace linecounter
 {
@@ -16,7 +15,6 @@ namespace linecounter
                     {
                         paths.Add(item);
                     }
-                    //Console.WriteLine(item);
                 }
 
                 result = Directory.EnumerateDirectories(cDir);
@@ -48,27 +46,16 @@ namespace linecounter
             List<string> paths = new List<string>();
             processDirs(args[0], paths, args[1]);
 
-            /*string[] files = Array.Empty<string>();
-            try
-            {
-                files = Directory.GetFiles(args[0], args[1], SearchOption.AllDirectories);
-            } catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Exiting...");
-                return;
-            }
-
-            if(files.Length == 0)
+            if(paths.Count == 0)
             {
                 Console.WriteLine("Couldn't find any files matching pattern:");
                 Console.WriteLine(args[1]);
                 return;
             }
 
-            decimal lineCounter = 0;
+            long lineCounter = 0;
 
-            foreach(string file in files)
+            foreach(string file in paths)
             {
                 foreach(string line in File.ReadLines(file))
                 {
@@ -77,7 +64,7 @@ namespace linecounter
             }
 
             Console.WriteLine($"Counted lines: {lineCounter}");
-            Console.WriteLine($"In {files.Length} files");*/
+            Console.WriteLine($"In {paths.Count} files");
 
         }
     }
