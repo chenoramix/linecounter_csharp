@@ -1,26 +1,24 @@
-﻿using System.IO.Enumeration;
-
-namespace linecounter
+﻿namespace linecounter
 {
     internal class Program
     {
-        static void processDirs(string cDir, List<string> paths, string pattern)
+        static void processDirs(string currentDir, List<string> paths, string endswith)
         {
             try
             {
-                var result = Directory.EnumerateFiles(cDir);
+                var result = Directory.EnumerateFiles(currentDir);
                 foreach(var item in result)
                 {
-                    if(FileSystemName.MatchesSimpleExpression(pattern, item))
+                    if(item.EndsWith(endswith))
                     {
                         paths.Add(item);
                     }
                 }
 
-                result = Directory.EnumerateDirectories(cDir);
+                result = Directory.EnumerateDirectories(currentDir);
                 foreach(var item in result)
                 {
-                    processDirs(item, paths, pattern);
+                    processDirs(item, paths, endswith);
                 }
 
             } catch(Exception e)
@@ -33,7 +31,7 @@ namespace linecounter
             if(args.Length != 2)
             {
                 Console.WriteLine("Usage:");
-                Console.WriteLine(@"linecounter.exe c:\path *.cs");
+                Console.WriteLine(@"dotnet linecounter.dll c:\path .cs");
                 return;
             }
 
